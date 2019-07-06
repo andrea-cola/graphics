@@ -1,13 +1,15 @@
 var flag = false;
 var currentLat;
 var currentLong;
+var lat;
+var long;
 
 function rotate(){
     currentLat = angle;
     currentLong = elevation;
 
-    var lat = 40.718655;
-    var long = 74.004589;
+    lat = 10;
+    long = 74.004589;
 
     // generate interpolation points for long.
     var pLong = [];
@@ -19,15 +21,18 @@ function rotate(){
     for(var i = 0; i < 4; i++)
         pLat[i] = currentLat + i * (lat - currentLat) / 3;
 
-    bezierLoop(0, pLat, pLong)
+    // animate rotation using Bezier curve
+    bezierLoop(0, pLat, pLong);
 }
 
 /**
  * Animated rotation of the earth. 
  */
 function bezierLoop(alpha, pLat, pLong){
+    var oldElevation = elevation;
     angle = bezier(alpha, pLong);
-    elevation = bezier(alpha, pLat);
+    elevation = -bezier(alpha, pLat);
+    adjustLight(angle, elevation - oldElevation);
     
     if(alpha <= 1)
         setTimeout(function() {
@@ -48,4 +53,10 @@ function bezier(a, p){
 function reset(){
     angle = 0.01;
     elevation = 0.01;
+}
+
+function adjustLight(angle, lat){
+    document.getElementById("LADirPhi").value = -angle;
+    document.getElementById("LADirTheta").value = document.getElementById("LADirTheta").value - lat;
+    console.log(document.getElementById("LADirPhi").value, document.getElementById("LADirTheta").value);
 }

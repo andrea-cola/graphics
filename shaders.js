@@ -153,3 +153,16 @@ var S7 = `
 	return [S1, S2, S3, S4, S5, S6, S7];
 }
 
+function fixCamera() {
+	var S2 = `
+		float g = LATarget / distance(LAPos, fs_pos);
+		vec3 dist_normalized = normalize(LAPos - fs_pos);
+		vec3 h = normalize(dist_normalized + eyedirVec);
+		
+		vec4 L = LAlightColor * pow(g, LADecay);
+		vec4 fr_1 = diffColor * clamp(dot(normalVec, dist_normalized), 0.0, 1.0);
+		vec4 fr_2 = specularColor * pow(clamp(dot(normalVec, h), 0.0, 1.0), SpecShine);
+		
+		out_color = L;
+	`;
+}
