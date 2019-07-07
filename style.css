@@ -1,0 +1,78 @@
+html, body, ul, p{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+html, body {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    z-index: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#point-canvas {
+    z-index: 50;
+}
+.evidence {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    z-index: 200;
+    background: white;
+}
+
+.line {
+    width: 1px;
+    height: 100%;;
+    background: red;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 200;
+}
+
+.line2 {
+    width: 100%;
+    height: 1px;
+    background: red;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    z-index: 200;
+}
+
+div.cityPopup {
+    width: auto;
+    height: auto;
+    margin: 10px 0 0 10px;
+    background: #DDD;
+    overflow: hidden;
+    position: fixed;
+    z-index: 100;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+div.cityPopup p {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+div.cityPopup ul li {
+    margin-top: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid transparent;
+}
+
+div.cityPopup ul li:hover {
+    font-weight: 600;
+    cursor: pointer;
+}

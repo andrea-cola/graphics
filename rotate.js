@@ -1,27 +1,42 @@
 var flag = false;
-var currentLat;
-var currentLong;
-var lat;
-var long;
+var oldLat = 0;
+var oldLong = 0;
+var lat = 0;
+var long = 0;
 
-function rotate(){
-    currentLat = angle;
-    currentLong = elevation;
+var c = [
+    {
+      "country": "AD",
+      "name": "New York",
+      "lat": "36.7128",
+      "lng": "68.0060"
+    },
+    {
+      "country": "IT",
+      "name": "Ospedaletto Lodigiano",
+      "lat": "43.16877",
+      "lng": "-12.87866"
+    }
+];
 
-    lat = 10;
-    long = 74.004589;
+function rotate(latitudine, longitudine){
+    lat = latitudine;
+    long = longitudine;
 
     // generate interpolation points for long.
     var pLong = [];
-    for(var i = 0; i < 4; i++)
-        pLong[i] = currentLong + i * (long - currentLong) / 3;
+    for(var i = 0; i < 4; i++){
+        pLong[i] = parseFloat(oldLong) + parseFloat(i) * parseFloat((long - oldLong) / 3);
+        console.log(pLong[i]);
+    }
 
     // generate interpolation points for lat.
     var pLat = [];
-    for(var i = 0; i < 4; i++)
-        pLat[i] = currentLat + i * (lat - currentLat) / 3;
+    for(var i = 0; i < 4; i++){
+        pLat[i] = parseFloat(oldLat) + parseFloat(i) * parseFloat((lat - oldLat) / 3); // animate rotation using Bezier curve
+        console.log(pLat[i]);
+    }
 
-    // animate rotation using Bezier curve
     bezierLoop(0, pLat, pLong);
 }
 
@@ -32,12 +47,25 @@ function bezierLoop(alpha, pLat, pLong){
     var oldElevation = elevation;
     angle = bezier(alpha, pLong);
     elevation = -bezier(alpha, pLat);
-    adjustLight(angle, elevation - oldElevation);
+    console.log(elevation/2)
+    adjustLight(angle, elevation/2);
     
     if(alpha <= 1)
         setTimeout(function() {
             bezierLoop(alpha + 0.01, pLat, pLong)
         }, 10);
+    else{
+        var w = $("#my-canvas").width();
+        var h = $("#my-canvas").height();
+        //placeMarker(w/2, h/2);
+
+        oldLat = lat;
+        oldLong = long;
+
+        console.log("END");
+        console.log(oldLong, angle);
+        console.log(oldLat, elevation);
+    }
 }
 
  /**
@@ -55,8 +83,23 @@ function reset(){
     elevation = 0.01;
 }
 
-function adjustLight(angle, lat){
-    document.getElementById("LADirPhi").value = -angle;
-    document.getElementById("LADirTheta").value = document.getElementById("LADirTheta").value - lat;
+function adjustLight(a, e){
+    console.log(a, e);
+    document.getElementById("LADirPhi").value = -a;
+    document.getElementById("LADirTheta").value = 80 + e;
     console.log(document.getElementById("LADirPhi").value, document.getElementById("LADirTheta").value);
+}
+
+function populate(){
+    c.forEach(element => {
+        $("#cities").append("<li class='city'>" + element.name + "</li>");
+    });
+}
+
+function chooseCity(city){
+    c.forEach(ci => {
+        if(city == ci.name){
+            rotate(ci.lat, ci.lng);
+        }
+    });
 }
