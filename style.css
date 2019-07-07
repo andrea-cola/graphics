@@ -11,24 +11,6 @@ html, body {
     height: 100%;
 }
 
-canvas {
-    z-index: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-#point-canvas {
-    z-index: 50;
-}
-.evidence {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    z-index: 200;
-    background: white;
-}
-
 .line {
     width: 1px;
     height: 100%;;
@@ -49,16 +31,72 @@ canvas {
     z-index: 200;
 }
 
-div.cityPopup {
+canvas {
+    z-index: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#point-canvas {
+    z-index: 50;
+}
+
+.upperLayer {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.upperLayer #menu {
+    width: 40px;
+    height: auto;
+    left: 30px;
+    top: 30px;
+    cursor: pointer;
+    position: fixed;
+}
+
+.upperLayer #bulb {
+    width: 40px;
+    height: auto;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+    position: fixed;
+}
+
+.upperLayer #menu:hover + .cityPopup {
+    display: block !important;
+}
+
+.upperLayer .cityPopup:hover {
+    display: block !important;
+}
+
+.evidence {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    z-index: 200;
+    background: white;
+}
+
+.upperLayer div.cityPopup {
     width: auto;
     height: auto;
-    margin: 10px 0 0 10px;
+    margin: 30px 0 0 30px;
     background: #DDD;
     overflow: hidden;
     position: fixed;
     z-index: 100;
     padding: 30px;
     border-radius: 10px;
+    top: 0;
+    display: none;
 }
 
 div.cityPopup p {

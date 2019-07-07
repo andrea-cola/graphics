@@ -42,40 +42,55 @@
 	<script src="cities.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-  			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-			  crossorigin="anonymous"></script>
-			  
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function () {
 			populate();
-			$(".city").on("click", function(){
+			$(".city").on("click", function () {
 				chooseCity($(this).html());
 			});
+
+			$("#bulb").on("click", function(){
+				$(".evidence").toggle();
+			});
 		});
+
 	</script>
 </head>
 
 <body style="background-color: grey;" onLoad="main();">
 
+	<!-- to delete -->
 	<div class="line"></div>
-
 	<div class="line2"></div>
 
+	<!-- earth canvas -->
 	<canvas id="my-canvas" style="background-color: black;">
 		Your browser doesn't support the Canvas Element!
 	</canvas>
 
+	<!-- markers canvas -->
 	<canvas id="point-canvas">
 		Your browser doesn't support the Canvas Element!
 	</canvas>
 
-	<div class="cityPopup">
-		<p>Our cities</p>
-		<ul id="cities">
-			
-		</ul>
+	<div class="upperLayer">
+
+		<img id="menu" src="assets/menu.png">
+
+		<div class="cityPopup">
+			<p>Our cities</p>
+			<ul id="cities">
+
+			</ul>
+		</div>
+
+		<img id="bulb" src="assets/bulb.png">
 	</div>
 
 	<center style="display: none">
