@@ -111,7 +111,8 @@ canvas {
     z-index: 100;
     padding: 30px;
     border-radius: 10px;
-    top: 200px;
+    top: 150px;
+    right: 15px;
     visibility: hidden;
 }
 
@@ -135,4 +136,9 @@ div.cityPopup ul li {
 div.cityPopup ul li:hover {
     font-weight: 600;
     cursor: pointer;
+}
+
+button.close {
+  position: absolute;
+  right: 10px;
 }
