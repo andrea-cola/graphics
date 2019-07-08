@@ -9,17 +9,27 @@ var c = [
       "country": "AD",
       "name": "New York",
       "lat": "36.7128",
-      "lng": "68.0060"
+      "lng": "68.0060",
+      "desc": {"abitanti": '8.622.698',
+               "densita": '10.998 ab/km²',
+               "sindaco": "Bill de Blasio",
+               "testo": "Situata sulla cosiddetta baia di New York (New York Bay), " +
+               "in parte sul continente e in parte su isole, è amministrativamente divisa in cinque distretti (borough): Manhattan, The Bronx, Queens, Brooklyn e Staten Island. Di essi, uno è nel continente (il Bronx, situato a nord di Manhattan), tre si trovano su isole: (Staten Island, di fronte al New Jersey; Queens e Brooklyn, rispettivamente nell'estremità nord-occidentale e sud-occidentale dell'isola di Long Island) e uno, Manhattan, sull'appendice inferiore della penisola su cui si trova anche il Bronx e che da esso è separato dall'Harlem River, fiume-canale che collega l'Hudson all'East River."}
     },
     {
       "country": "IT",
       "name": "Ospedaletto Lodigiano",
       "lat": "43.16877",
-      "lng": "-12.87866"
+      "lng": "-12.87866",
+      "desc": {"abitanti": '1.989',
+               "densita": '230 ab/km²',
+               "sindaco": "Lucia Mizzi",
+               "testo": "Ospedaletto è un centro agricolo di origine medievale. Nel 1863 Ospedaletto assunse il nome ufficiale di Ospedaletto Lodigiano, per distinguersi da altre località omonime.\n" +
+                        "La città diede i natali al musicista Ambrogio Minoja (1752-1825). "}
     }
 ];
 
-function rotate(latitudine, longitudine){
+function rotate(latitudine, longitudine, callback){
     lat = latitudine;
     long = longitudine;
 
@@ -38,18 +48,19 @@ function rotate(latitudine, longitudine){
     }
 
     bezierLoop(0, pLat, pLong);
+    callback();
 }
 
 /**
- * Animated rotation of the earth. 
+ * Animated rotation of the earth.
  */
 function bezierLoop(alpha, pLat, pLong){
     var oldElevation = elevation;
     angle = bezier(alpha, pLong);
     elevation = -bezier(alpha, pLat);
-    console.log(elevation/2)
+    // console.log(elevation/2)
     adjustLight(angle, elevation/2);
-    
+
     if(alpha <= 1)
         setTimeout(function() {
             bezierLoop(alpha + 0.01, pLat, pLong)
@@ -62,9 +73,9 @@ function bezierLoop(alpha, pLat, pLong){
         oldLat = lat;
         oldLong = long;
 
-        console.log("END");
-        console.log(oldLong, angle);
-        console.log(oldLat, elevation);
+        // console.log("END");
+        // console.log(oldLong, angle);
+        // console.log(oldLat, elevation);
     }
 }
 
@@ -72,7 +83,7 @@ function bezierLoop(alpha, pLat, pLong){
   * Bezier curve interpolation.
   */
 function bezier(a, p){
-    return Math.pow(1-a, 3) * p[0] + 3 * Math.pow(1-a, 2) * a * p[1] + 3 * (1-a) * Math.pow(a, 2) * p[2] + Math.pow(a, 3) * p[3]; 
+    return Math.pow(1-a, 3) * p[0] + 3 * Math.pow(1-a, 2) * a * p[1] + 3 * (1-a) * Math.pow(a, 2) * p[2] + Math.pow(a, 3) * p[3];
 }
 
 /**
@@ -99,7 +110,20 @@ function populate(){
 function chooseCity(city){
     c.forEach(ci => {
         if(city == ci.name){
-            rotate(ci.lat, ci.lng);
+            rotate(ci.lat, ci.lng, function(){
+              show_description(ci);
+              console.log('asd')
+            });
         }
     });
+}
+
+function show_description(element){
+  el = $("#cityDescription");
+  el.css('visibility',"visible");
+  el.html("<h1 class='city'>" + element.name + "</h1>"+
+          "<p><b>Abitanti: </b>" + element.desc.abitanti + "</p>"+
+          "<p><b>Densità: </b>" + element.desc.densita + "</p>" +
+          "<p><b>Sindaco: </b>" + element.desc.sindaco + "</p>"+
+          "<h3>Descrizione: </h3><p>" + element.desc.testo + "</p>");
 }

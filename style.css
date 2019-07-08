@@ -99,6 +99,28 @@ canvas {
     display: none;
 }
 
+.upperLayer div.cityDescription {
+    width: auto;
+    height: auto;
+    max-width: 515px;
+    max-height: 740px;
+    margin: 30px 0 0 30px;
+    background: #DDD;
+    overflow: hidden;
+    position: fixed;
+    z-index: 100;
+    padding: 30px;
+    border-radius: 10px;
+    top: 200px;
+    visibility: hidden;
+}
+
+
+div.cityDescription p {
+    font-size: 25px;
+    font-weight: 25;
+}
+
 div.cityPopup p {
     font-size: 25px;
     font-weight: 700;
