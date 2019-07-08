@@ -9,8 +9,8 @@ var c = [
     {
       "country": "AD",
       "name": "New York",
-      "lat": "36.7128",
-      "lng": "68.0060",
+      "lat": "40.7128",
+      "lng": "74.0060",
       "fov": "15",
       "desc": {"abitanti": '8.622.698',
                "densita": '10.998 ab/km²',
@@ -75,7 +75,6 @@ function bezierLoop(alpha, pLat, pLong){
     else{
         var w = $("#my-canvas").width();
         var h = $("#my-canvas").height();
-        placeMarker(w/2, h/2);
 
         oldLat = lat;
         oldLong = long;
@@ -95,7 +94,6 @@ function bezier(a, p){
 
 
 function bezierLoop_perspective(fov_s, fov_t, w,h, beta){
-  console.log('hello');
   fov_s = bezier_2_values(fov_s, fov_t, beta)
   // console.log(fov_s)
 
