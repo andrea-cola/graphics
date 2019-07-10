@@ -3,6 +3,8 @@ var oldLat = 0;
 var oldLong = 0;
 var lat = 0;
 var long = 0;
+var semaforo_old = 1;
+var semaforo_new = 0;
 // var current_fov = 60;
 
 var c = [
@@ -14,6 +16,7 @@ var c = [
       "lat": "36.7128",
       "lng": "67.0060",
       "fov": "15",
+      "zoom": "4",
       "desc": {"abitanti": '8.622.698',
                "densita": '10.998 ab/km²',
                "sindaco": "Bill de Blasio",
@@ -28,6 +31,7 @@ var c = [
       // "lat": "45.1660", //45.1660
       // "lng": "-9.5825", //9.5825
       "fov": "5",
+      "zoom": "3.5",
       "desc": {"abitanti": '1.989',
                "densita": '230 ab/km²',
                "sindaco": "Lucia Mizzi",
@@ -41,6 +45,7 @@ var c = [
         "lat": "90",
         "lng": "0",
         "fov": "10",
+        "zoom": "3.5",
         "desc": {"abitanti": '1.989',
                  "densita": '230 ab/km²',
                  "sindaco": "Lucia Mizzi",
@@ -78,6 +83,7 @@ var c = [
 ];
 
 function rotate(latitudine, longitudine, callback){
+    semaforo_old = 1;
     lat = latitudine;
     long = longitudine;
 
@@ -97,8 +103,9 @@ function rotate(latitudine, longitudine, callback){
 
     bezierLoop(0, pLat, pLong);
     // todo: mostrare informazioni alla fine dell'animazione
-
     callback();
+
+
 
 }
 
@@ -137,11 +144,31 @@ function bezier(a, p){
 }
 
 
+function bezierLoop_zoom(zoom_s, zoom_t, beta){
+  console.log(zoom_s, zoom_t, beta, semaforo_old);
+  zoom_s = bezier_2_values(zoom_s, zoom_t, beta);
+  lookRadius = zoom_s;
+  if((beta <= 1)&&(semaforo_old==1)){
+    setTimeout(function() {
+        bezierLoop_zoom(zoom_s, zoom_t, beta+0.001)
+        return;
+      }, 10)
+  }
+  else{
+      // semaforo_old = 0;
+      // console.log("sema", semaforo_old);
+      lookRadius = zoom_t;
+      return 1;
+  }
+  // console.log("end", lookRadius, beta);
+}
+
+
 function bezierLoop_perspective(fov_s, fov_t, w,h, beta){
   fov_s = bezier_2_values(fov_s, fov_t, beta)
   // console.log(fov_s)
-  current_fov = fov_s;
-  perspectiveMatrix = utils.MakePerspective(fov_s, w / h, 0.1, 1000.0);
+  // lookRadius = fov_s;
+  // perspectiveMatrix = utils.MakePerspective(fov_s, w / h, 0.1, 1000.0);
 
   if(beta <= 1)
       setTimeout(function() {
@@ -151,10 +178,8 @@ function bezierLoop_perspective(fov_s, fov_t, w,h, beta){
   // console.log(b_fov)
 }
 
-//todo smooth camera movement
 function bezier_2_values(x, y, beta){
-  // console.log(x,y,beta)
-  return (1-beta)*x + beta*y
+  return (1-beta)*x + beta*y;
 }
 
 /**
@@ -175,10 +200,13 @@ function reset(){
       return;
     });
 
-    bezierLoop_perspective(current_fov, 60, w,h, 0);
-    current_fov = 60;
-    //adjusting light
+    // bezierLoop_perspective(current_fov, 60, w,h, 0);
+    // current_fov = 60;
+    bezierLoop_zoom(lookRadius, 10, 0);
+    // console.log("Going back", lookRadius);
     adjustLight(angle, elevation/2);
+    // lookRadius = 10.0;
+
     // perspectiveMatrix = utils.MakePerspective(current_fov, w / h, 0.1, 1000.0);
 }
 
@@ -199,18 +227,27 @@ function chooseCity(city){
     c.forEach(ci => {
         if(city == ci.name){
             rotate(ci.lat, ci.lng, function(){
-              show_description(ci);
+              //TODO close active windows..
               var w = window.innerWidth;
               var h = window.innerHeight;
-              var city_fov = ci.fov;
+              var city_look = ci.zoom;
               // smoothing the zoom
-              bezierLoop_perspective(current_fov, city_fov, w,h, 0)
-              current_fov = city_fov;
-              console.log(current_fov)
+              bezierLoop_zoom(lookRadius, city_look, 0);
+              // semaforo_old = temp;
+              setTimeout(function() {
+                semaforo_old = 0;
+                show_description(ci);
+              }, 1600);
+
+              // lookRadius = city_look;
               // perspectiveMatrix = utils.MakePerspective(60, 16 / h, 0.1, 1000.0);
             });
         }
     });
+}
+
+function get_semaphore(){
+  return this.semaforo_old;
 }
 
 function show_description(element){
