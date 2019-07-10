@@ -3,14 +3,16 @@ var oldLat = 0;
 var oldLong = 0;
 var lat = 0;
 var long = 0;
-var current_fov = 60;
+// var current_fov = 60;
 
 var c = [
     {
       "country": "AD",
       "name": "New York",
-      "lat": "40.7128",
-      "lng": "74.0060",
+      // "lat": "40.7128",
+      // "lng": "74.0060",
+      "lat": "36.7128",
+      "lng": "67.0060",
       "fov": "15",
       "desc": {"abitanti": '8.622.698',
                "densita": '10.998 ab/km²',
@@ -23,6 +25,8 @@ var c = [
       "name": "Ospedaletto Lodigiano",
       "lat": "43.16877",
       "lng": "-12.87866",
+      // "lat": "45.1660", //45.1660
+      // "lng": "-9.5825", //9.5825
       "fov": "5",
       "desc": {"abitanti": '1.989',
                "densita": '230 ab/km²',
@@ -33,30 +37,44 @@ var c = [
     },
     {
         "country": "IT",
-        "name": "Ospedaletto",
-        "lat": "-43.16877",
-        "lng": "-12.87866",
-        "fov": "5",
+        "name": "PoloNord",
+        "lat": "90",
+        "lng": "0",
+        "fov": "10",
         "desc": {"abitanti": '1.989',
                  "densita": '230 ab/km²',
                  "sindaco": "Lucia Mizzi",
                  "testo": "Ospedaletto è un centro agricolo di origine medievale. Nel 1863 Ospedaletto assunse il nome ufficiale di Ospedaletto Lodigiano, per distinguersi da altre località omonime.\n" +
                           "La città diede i natali al musicista Ambrogio Minoja (1752-1825). "}
-  
+
       },
       {
         "country": "IT",
-        "name": "Lodigiano",
-        "lat": "-43.16877",
-        "lng": "12.87866",
+        "name": "Cape Town",
+        "lat": "-34.0",
+        "lng": "-18.4",
         "fov": "5",
         "desc": {"abitanti": '1.989',
                  "densita": '230 ab/km²',
                  "sindaco": "Lucia Mizzi",
                  "testo": "Ospedaletto è un centro agricolo di origine medievale. Nel 1863 Ospedaletto assunse il nome ufficiale di Ospedaletto Lodigiano, per distinguersi da altre località omonime.\n" +
                           "La città diede i natali al musicista Ambrogio Minoja (1752-1825). "}
-  
+
       }
+        ,
+        {
+          "country": "IT",
+          "name": "RioDeJaneiro",
+          "lat": "-22.3",
+          "lng": "43.0",
+          "fov": "15",
+          "desc": {"abitanti": '1.989',
+                   "densita": '230 ab/km²',
+                   "sindaco": "Lucia Mizzi",
+                   "testo": "Ospedaletto è un centro agricolo di origine medievale. Nel 1863 Ospedaletto assunse il nome ufficiale di Ospedaletto Lodigiano, per distinguersi da altre località omonime.\n" +
+                            "La città diede i natali al musicista Ambrogio Minoja (1752-1825). "}
+
+        }
 ];
 
 function rotate(latitudine, longitudine, callback){
@@ -122,7 +140,7 @@ function bezier(a, p){
 function bezierLoop_perspective(fov_s, fov_t, w,h, beta){
   fov_s = bezier_2_values(fov_s, fov_t, beta)
   // console.log(fov_s)
-
+  current_fov = fov_s;
   perspectiveMatrix = utils.MakePerspective(fov_s, w / h, 0.1, 1000.0);
 
   if(beta <= 1)
@@ -188,6 +206,7 @@ function chooseCity(city){
               // smoothing the zoom
               bezierLoop_perspective(current_fov, city_fov, w,h, 0)
               current_fov = city_fov;
+              console.log(current_fov)
               // perspectiveMatrix = utils.MakePerspective(60, 16 / h, 0.1, 1000.0);
             });
         }
