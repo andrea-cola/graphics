@@ -4,39 +4,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ArCo Project</title>
-
-	<script id="vertex" type="x-shader">
-        attribute vec2 aVertexPosition;
-        attribute vec4 vColor;
-
-        varying vec4 fColor;
-
-        void main() {
-            gl_Position = vec4(aVertexPosition, 1.0, 1.0);
-            gl_PointSize = 5.0;
-            fColor = vColor;
-        }
-    </script>
-	<script id="fragment" type="x-shader">
-        #ifdef GL_ES
-            precision highp float;
-        #endif
-        varying vec4 fColor;
-        void main() {
-            gl_FragColor = fColor;
-        }
-    </script>
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/106/three.js"></script>
 	<script src="lib/webgl-obj-loader.min.js"></script>
 	<script src="lib/model1.js"></script>
 	<script src="lib/model.js"></script>
-	<script src="lib/earthModel.js"></script>
 	<script src="lib/texture1.js"></script>
 	<script src="lib/texture.js"></script>
-	<script src="lib/earthTexture.js"></script>
 	<script src="lib/utils.js"></script>
 	<script src="lib/keyboard.js"></script>
-	<script src="lib/pointCanvas.js"></script>
 	<script src="lib/app.js"></script>
 	<script src="rotate.js"></script>
 
@@ -68,7 +44,6 @@
 			$(".subtab").on("click", function () {
 				if (!$(this).hasClass("active")) {
 					console.log("log");
-					//showLight($(this).attr("id").substring(0, 2));
 					remove();
 					$(this).addClass("active");
 					$(".tab-body").hide();
@@ -116,11 +91,6 @@
 	<canvas id="my-canvas">
 		Your browser doesn't support the Canvas Element!
 	</canvas>
-
-	<!-- markers canvas -->
-	<!-- <canvas id="point-canvas">
-		Your browser doesn't support the Canvas Element!
-	</canvas> -->
 
 	<div class="lights" style="display: none">
 		<div class="tab active" id="LB1">
