@@ -91,14 +91,12 @@ function rotate(latitudine, longitudine, callback){
     var pLong = [];
     for(var i = 0; i < 4; i++){
         pLong[i] = parseFloat(oldLong) + parseFloat(i) * parseFloat((long - oldLong) / 3);
-        // console.log(pLong[i]);
     }
 
     // generate interpolation points for lat.
     var pLat = [];
     for(var i = 0; i < 4; i++){
         pLat[i] = parseFloat(oldLat) + parseFloat(i) * parseFloat((lat - oldLat) / 3); // animate rotation using Bezier curve
-        // console.log(pLat[i]);
     }
 
     bezierLoop(0, pLat, pLong);
@@ -116,7 +114,6 @@ function bezierLoop(alpha, pLat, pLong){
     var oldElevation = elevation;
     angle = bezier(alpha, pLong);
     elevation = -bezier(alpha, pLat);
-    // console.log(elevation/2)
     adjustLight(angle, elevation/2);
 
     if(alpha <= 1)
@@ -129,10 +126,6 @@ function bezierLoop(alpha, pLat, pLong){
 
         oldLat = lat;
         oldLong = long;
-
-        // console.log("END");
-        // console.log(oldLong, angle);
-        // console.log(oldLat, elevation);
     }
 }
 
@@ -145,7 +138,6 @@ function bezier(a, p){
 
 
 function bezierLoop_zoom(zoom_s, zoom_t, beta){
-  console.log(zoom_s, zoom_t, beta, semaforo_old);
   zoom_s = bezier_2_values(zoom_s, zoom_t, beta);
   lookRadius = zoom_s;
   if((beta <= 1)&&(semaforo_old==1)){
@@ -155,18 +147,14 @@ function bezierLoop_zoom(zoom_s, zoom_t, beta){
       }, 10)
   }
   else{
-      // semaforo_old = 0;
-      // console.log("sema", semaforo_old);
       lookRadius = zoom_t;
       return 1;
   }
-  // console.log("end", lookRadius, beta);
 }
 
 
 function bezierLoop_perspective(fov_s, fov_t, w,h, beta){
   fov_s = bezier_2_values(fov_s, fov_t, beta)
-  // console.log(fov_s)
   // lookRadius = fov_s;
   // perspectiveMatrix = utils.MakePerspective(fov_s, w / h, 0.1, 1000.0);
 
@@ -174,8 +162,6 @@ function bezierLoop_perspective(fov_s, fov_t, w,h, beta){
       setTimeout(function() {
           bezierLoop_perspective(fov_s, fov_t, w,h, beta+0.001)
       }, 10);
-
-  // console.log(b_fov)
 }
 
 function bezier_2_values(x, y, beta){
@@ -203,7 +189,6 @@ function reset(){
     // bezierLoop_perspective(current_fov, 60, w,h, 0);
     // current_fov = 60;
     bezierLoop_zoom(lookRadius, 10, 0);
-    // console.log("Going back", lookRadius);
     adjustLight(angle, elevation/2);
     // lookRadius = 10.0;
 
@@ -211,10 +196,8 @@ function reset(){
 }
 
 function adjustLight(a, e){
-    // console.log(a, e);
     document.getElementById("LADirPhi").value = -a;
     document.getElementById("LADirTheta").value = 80 + e;
-    // console.log(document.getElementById("LADirPhi").value, document.getElementById("LADirTheta").value);
 }
 
 function populate(){
