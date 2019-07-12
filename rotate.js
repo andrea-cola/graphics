@@ -235,8 +235,8 @@ function chooseCity(city){
               bezierLoop_zoom(lookRadius, city_look, 0);
               // semaforo_old = temp;
               setTimeout(function() {
-                semaforo_old = 0;
                 show_description(ci);
+                semaforo_old = 0;
               }, 1600);
 
               // lookRadius = city_look;
@@ -246,8 +246,78 @@ function chooseCity(city){
     });
 }
 
-function get_semaphore(){
-  return this.semaforo_old;
+function select(mouse_x, mouse_y)
+{
+  gl.useProgram(selector_program);
+  var pixel = new window.Uint8Array(4); // A single RGBA value
+  gl.readPixels(mouse_x, mouse_y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+  console.log(mouse_x, mouse_y, pixel);
+  // unproject(mouse_x, mouse_y, 0);
+  // let pixel = new window.Uint8Array(4); // A single RGBA value
+  //
+  // // Render the scene to put each object's ID number into the color buffer.
+  // gl.useProgram(selector_program);
+  // // render(gl, selector_program);
+  //
+  // // Convert the canvas coordinate system into an image coordinate system.
+  // let canvas = document.getElementById("my-canvas");
+  // mouse_y = canvas.clientHeight - mouse_y;
+  //
+  // // Get the color value from the rendered color buffer.
+  // gl.readPixels(mouse_x, mouse_y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+  // //gl.readPixels(x, y, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+  // console.log(mouse_y, mouse_x, pixel)
+  // // Convert the RGBA color array into a single integer
+  // // selected_object_id = convertColor.getID(pixel[0], pixel[1], pixel[2], pixel[3]);
+  //
+  setTimeout(function(){
+    gl.useProgram(program);
+    console.log(program);
+    // render(gl, program);
+  }, 3000);
+  return;
+}
+
+function unproject(winx,winy,winz){
+     // winz is either 0 (near plane), 1 (far plane) or somewhere in between.
+      // if it's not given a value we'll produce coords for both.
+      if (typeof(winz) == "number") {
+        winx = parseFloat(winx);
+        winy = parseFloat(winy);
+        winz = parseFloat(winz);
+
+        var inf = [];
+
+        var mm = viewMatrix;
+
+        var pm = projectionMatrix;
+        // var viewport = [0, 0, pm.width, pm.height];
+        var viewport = [0, 0, 16, 9];
+
+        //Calculation for inverting a matrix, compute projection x modelview; then compute the inverse
+        // var m = mat4.set(mm, mat4.create());
+        // mat4.inverse(m, m);
+        // mat4.multiply(pm, m, m);
+        // mat4.inverse(m, m);
+        var m = utils.invertMatrix(utils.multiplyMatrices(pm, utils.invertMatrix(mm)));
+        // Transformation of normalized coordinates between -1 and 1
+        inf[0]=(winx-viewport[0])/viewport[2]*2.0-1.0;
+        inf[1]=(winy-viewport[1])/viewport[3]*2.0-1.0;
+        inf[2]=2.0*winz-1.0;
+        inf[3]=1.0;
+
+        //Objects coordinates
+        var out = utils.multiplyMatrixVector(m, inf);
+        // mat4.multiplyVec4(m, inf, out);
+        if(out[3]==0.0)
+           return null;
+
+        out[3]=1.0/out[3];
+        console.log(out[0]*out[3], out[1]*out[3], out[2]*out[3]);
+        return [out[0]*out[3], out[1]*out[3], out[2]*out[3]];
+      }
+      else
+        return [unproject(winx, winy, 0), unproject(winx, winy, 1)];
 }
 
 function show_description(element){

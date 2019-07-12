@@ -62,6 +62,14 @@
 			});
 		});
 
+		document.addEventListener("click", function(event){
+		  let clientX = event.clientX;
+		  let clientY = event.clientY;
+		  let print = String(clientX) + " " + String(clientY);
+		  // alert(print);
+		  // select(clientX, clientY);
+		});
+
 	</script>
 </head>
 
@@ -94,11 +102,10 @@
 	<canvas id="my-canvas" style="background-color: black;">
 		Your browser doesn't support the Canvas Element!
 	</canvas>
-
-	<!-- markers canvas -->
-	<!-- <canvas id="point-canvas">
+	<!-- <canvas id="text" style="background-color: rgba(0,0,0,0); display:none;">
 		Your browser doesn't support the Canvas Element!
 	</canvas> -->
+
 
 	<center style="display: none">
 		<span onclick="ChangeShader(-1);" id="prevButton" style="display:none; color:red">Previous</span> -
