@@ -4,7 +4,6 @@ html, body, ul, p{
     list-style: none;
 }
 
-
 div {
     overflow: hidden;
 }
@@ -31,9 +30,11 @@ body {
     top: 0;
     left: 50%;
     z-index: 200;
+    display: none;
 }
 
 .line2 {
+    display: none;
     width: 100%;
     height: 1px;
     background: red;
