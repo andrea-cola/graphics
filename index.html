@@ -4,7 +4,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ArCo Project</title>
-	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/106/three.js"></script>
 	<script src="lib/webgl-obj-loader.min.js"></script>
 	<script src="lib/model1.js"></script>
@@ -13,6 +12,8 @@
 	<script src="lib/texture.js"></script>
 	<script src="lib/utils.js"></script>
 	<script src="lib/keyboard.js"></script>
+	<script src="lib/cube.js"></script>
+	<script src="lib/cubeRendering.js"></script>
 	<script src="lib/app.js"></script>
 	<script src="rotate.js"></script>
 
@@ -99,121 +100,6 @@
 	<canvas id="my-canvas">
 		Your browser doesn't support the Canvas Element!
 	</canvas>
-<<<<<<< HEAD
-	<!-- <canvas id="text" style="background-color: rgba(0,0,0,0); display:none;">
-		Your browser doesn't support the Canvas Element!
-	</canvas> -->
-
-
-	<center style="display: none">
-		<span onclick="ChangeShader(-1);" id="prevButton" style="display:none; color:red">Previous</span> -
-		<span id="p1">Shader request goes here</span> -
-		<span onclick="rotate()" id="nextButton" style="color:red">Next</span>
-	</center>
-	<center class="evidence">
-		<table border="1">
-			<tr>
-				<td>
-					<div style="text-align:center"><select id="lightEditNo" onchange="showLight(this.value);">
-							<option value="LA">Light A</option>
-							<option value="LB">Light B</option>
-							<option value="LC">Light C</option>
-						</select></div>
-				</td>
-				<th colspan="2">Ambient</th>
-				<th colspan="2">Diffuse</th>
-				<th colspan="2">Specular</th>
-			</tr>
-			<tr>
-				<td rowspan="6">
-					<div id="LA">
-						<table border="1">
-							<tr>
-								<td>
-									<div id="LA11"><b>Type</b></div>
-								</td>
-								<td>
-									<div id="LA12"><select id="LAlightType" onchange="showHideUI(this.id,this.value);">
-											<option value="none">None</option>
-											<option value="direct">Direct</option>
-											<option value="point">Point</option>
-											<option value="spot">Spot</option>
-										</select></div>
-								</td>
-								<td>
-									<div id="LA13">Color</div>
-								</td>
-								<td>
-									<div id="LA14"><input type="color" id="LAlightColor" value="#ffffff"></div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div id="LA21">Pos <i>x</i></div>
-								</td>
-								<td>
-									<div id="LA22"><input type="range" min="-100" max="100" id="LAPosX"></div>
-								</td>
-								<td>
-									<div id="LA23">Decay &beta;</div>
-								</td>
-								<td>
-									<div id="LA24"><input type="range" min="0" max="2" id="LADecay"></div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div id="LA31">Pos <i>y</i></div>
-								</td>
-								<td>
-									<div id="LA32"><input type="range" min="-100" max="100" id="LAPosY"></div>
-								</td>
-								<td>
-									<div id="LA33">Targe dist. <i>g</i></div>
-								</td>
-								<td>
-									<div id="LA34"><input type="range" min="0" max="100" id="LATarget"></div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div id="LA41">Pos <i>z</i></div>
-								</td>
-								<td>
-									<div id="LA42"><input type="range" min="-100" max="100" id="LAPosZ"></div>
-								</td>
-								<td>
-									<div id="LA43">Cone <i>out</i></div>
-								</td>
-								<td>
-									<div id="LA44"><input type="range" min="0" max="150" id="LAConeOut"></div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div id="LA51">Dir &theta;</div>
-								</td>
-								<td>
-									<div id="LA52"><input type="range" min="0" max="180" id="LADirTheta"></div>
-								</td>
-								<td>
-									<div id="LA53">Cone <i>in</i></div>
-								</td>
-								<td>
-									<div id="LA54"><input type="range" min="0" max="100" id="LAConeIn"></div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div id="LA61">Dir &phi;</div>
-								</td>
-								<td>
-									<div id="LA62"><input type="range" min="-180" max="180" id="LADirPhi"></div>
-								</td>
-								<td colspan="2">&nbsp;</td>
-							</tr>
-						</table>
-=======
 
 	<div class="lights" style="display: none">
 		<div class="tab active" id="LB1">
@@ -325,7 +211,6 @@
 							<div id="LC61">Dir &phi;</div>
 							<div id="LC62"><input type="range" min="-180" max="180" id="LCDirPhi"></div>
 						</div>
->>>>>>> aef9592f1b3b93f815bce3d8272f1b6f9db3ed2f
 					</div>
 				</div>
 				<div class="tab-body" id="ambient" style="display: none">

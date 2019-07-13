@@ -4,6 +4,7 @@ html, body, ul, p{
     list-style: none;
 }
 
+
 div {
     overflow: hidden;
 }
@@ -47,6 +48,10 @@ canvas {
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.canvas-text-class{
+  background-color: rgba(150, 150,150,0.5);
 }
 
 #my-canvas {
