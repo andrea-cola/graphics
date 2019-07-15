@@ -112,28 +112,28 @@ function reset(){
     cdx = 0;
     cdz = 0;
 
-    zoom_s = bezier_2_values(zoom_s, zoom_t, beta);
-    lookRadius = zoom_s;
-    if((beta <= 1)&&(semaforo_old==1)){
-      setTimeout(function() {
-          bezierLoop_zoom(zoom_s, zoom_t, beta+0.001)
-          return;
-        }, 10)
-    }
-    else{
-        lookRadius = zoom_t;
-        return 1;
-    }
-    
-    bezierLoop_zoom(cameraDistance, 0, 0);
-    bezierLoop_zoom(cameraDistanceX, 0, 0);
-    bezierLoop_zoom(cameraDistanceZ, 0, 0);
-    bezierLoop_zoom(roll, 0, 0);
+    // zoom_s = bezier_2_values(zoom_s, zoom_t, beta);
+    // lookRadius = zoom_s;
+    // if((beta <= 1)&&(semaforo_old==1)){
+    //   setTimeout(function() {
+    //       bezierLoop_zoom(zoom_s, zoom_t, beta+0.001)
+    //       return;
+    //     }, 10)
+    // }
+    // else{
+    //     lookRadius = zoom_t;
+    //     return 1;
+    // }
 
-    // cameraDistance = 0;
-    // cameraDistanceX = 0;
-    // cameraDistanceZ = 0;
-    // roll = 0;
+    // bezierLoop_zoom(cameraDistance, 0, 0);
+    // bezierLoop_zoom(cameraDistanceX, 0, 0);
+    // bezierLoop_zoom(cameraDistanceZ, 0, 0);
+    // bezierLoop_zoom(roll, 0, 0);
+
+    cameraDistance = 0;
+    cameraDistanceX = 0;
+    cameraDistanceZ = 0;
+    roll = 0;
 }
 
 function adjustLight(a, e){
