@@ -5,11 +5,14 @@ var lat = 0;
 var long = 0;
 var semaforo_old = 1;
 var semaforo_new = 0;
+
+var parametroCamera = 0;
 var elevation = 0.01;
 var angle = 0.01;
-var roll = 0.01;
+var roll = 0.5;
 
 function rotate(latitudine, longitudine, callback){
+    cdi = 0;
     semaforo_old = 1;
     lat = latitudine;
     long = longitudine;
@@ -81,13 +84,16 @@ function bezier_2_values(x, y, beta){
   return (1-beta)*x + beta*y;
 }
 
+function closeWindow(){
+  console.log("Closed!");
+  $("#cityDescription").css('visibility',"hidden");
+}
+
 /**
  * Reset the view to the primar meridian.
  */
 function reset(){
-
-    $("#cityDescription").css('visibility',"hidden");
-
+    closeWindow();
     var w = window.innerWidth;
     var h = window.innerHeight;
 
@@ -102,6 +108,32 @@ function reset(){
 
     bezierLoop_zoom(lookRadius, 10, 0);
     adjustLight(angle, elevation/2);
+    cdi = 0;
+    cdx = 0;
+    cdz = 0;
+
+    zoom_s = bezier_2_values(zoom_s, zoom_t, beta);
+    lookRadius = zoom_s;
+    if((beta <= 1)&&(semaforo_old==1)){
+      setTimeout(function() {
+          bezierLoop_zoom(zoom_s, zoom_t, beta+0.001)
+          return;
+        }, 10)
+    }
+    else{
+        lookRadius = zoom_t;
+        return 1;
+    }
+    
+    bezierLoop_zoom(cameraDistance, 0, 0);
+    bezierLoop_zoom(cameraDistanceX, 0, 0);
+    bezierLoop_zoom(cameraDistanceZ, 0, 0);
+    bezierLoop_zoom(roll, 0, 0);
+
+    // cameraDistance = 0;
+    // cameraDistanceX = 0;
+    // cameraDistanceZ = 0;
+    // roll = 0;
 }
 
 function adjustLight(a, e){
@@ -214,10 +246,13 @@ function unproject(winx,winy,winz){
 function show_description(element){
   el = $("#cityDescription");
   el.css('visibility',"visible");
-  el.html('<button type="button" class="close right" onclick="reset()">&times;</button>' +
+  el.html("<div class='close'>"+
+          `<button type="button" class="" onclick="reset()">&#8617;</button>` +
+           '<button type="button" class="" onclick="closeWindow()">&times;</button>' +
+          "</div>" +
           "<h1 class='city'>" + element.name + "</h1>"+
           "<p><b>Abitanti: </b>" + element.desc.abitanti + "</p>"+
           "<p><b>Densità: </b>" + element.desc.densita + "</p>" +
           "<p><b>Sindaco: </b>" + element.desc.sindaco + "</p>"+
-          "<h3>Descrizione: </h3><p>" + element.desc.testo + "</p>");
+          "<h3>Descrizione: </h3><p>" + element.desc.testo + "</p></div>");
 }

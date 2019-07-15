@@ -90,6 +90,15 @@ canvas {
     position: fixed;
 }
 
+.upperLayer #backArrow {
+    width: 40px;
+    height: auto;
+    right: 100px;
+    top: 30px;
+    cursor: pointer;
+    position: fixed;
+}
+
 .upperLayer #menu:hover + .cityPopup {
     display: block !important;
 }
@@ -260,7 +269,7 @@ div.cityPopup ul li:hover {
     cursor: pointer;
 }
 
-button.close {
+div.close {
   position: absolute;
   right: 10px;
 }
