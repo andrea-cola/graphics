@@ -16,10 +16,12 @@ html, body {
 }
 
 body {
-    background-image: url("assets/back.jpg");
+    /* background-image: url("assets/back.jpg");
     background-size: cover;
     background-position: 50%;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+
+    background: #000;
 }
 
 .line {
@@ -154,7 +156,7 @@ canvas {
 .lights .body {
     float: left;
     width: 100%;
-    min-height: 220px;
+    min-height: 250px;
 }
 
 .lights .body .sub-body {

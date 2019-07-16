@@ -60,10 +60,10 @@
 			}
 		});
 
-		document.addEventListener("click", function(event){
-		  let clientX = event.clientX;
-		  let clientY = event.clientY;
-		  let print = String(clientX) + " " + String(clientY);
+		document.addEventListener("click", function (event) {
+			let clientX = event.clientX;
+			let clientY = event.clientY;
+			let print = String(clientX) + " " + String(clientY);
 		});
 
 	</script>
@@ -190,24 +190,23 @@
 							<div id="LC42"><input type="range" min="-100" max="100" id="LCPosZ"></div>
 						</div>
 
-						<div class="col"></div>
-						<div id="LC23">Decay &beta;</div>
-						<div id="LC24"><input type="range" min="0" max="2" id="LCDecay"></div>
-						<div id="LC33">Targe dist. <i>g</i></div>
-						<div id="LC34"><input type="range" min="0" max="100" id="LCTarget"></div>
+						<div class="col">
+							<div id="LC23">Decay &beta;</div>
+							<div id="LC24"><input type="range" min="0" max="2" id="LCDecay"></div>
+							<div id="LC33">Targe dist. <i>g</i></div>
+							<div id="LC34"><input type="range" min="0" max="100" id="LCTarget"></div>
+
+							<div id="LC51">Dir &theta;</div>
+							<div id="LC52"><input type="range" min="0" max="180" id="LCDirTheta"></div>
+							<div id="LC61">Dir &phi;</div>
+							<div id="LC62"><input type="range" min="-180" max="180" id="LCDirPhi"></div>
+						</div>
 
 						<div class="col">
 							<div id="LC43">Cone <i>out</i></div>
 							<div id="LC44"><input type="range" min="0" max="150" id="LCConeOut"></div>
 							<div id="LC53">Cone <i>in</i></div>
 							<div id="LC54"><input type="range" min="0" max="100" id="LCConeIn"></div>
-						</div>
-
-						<div class="col">
-							<div id="LC51">Dir &theta;</div>
-							<div id="LC52"><input type="range" min="0" max="180" id="LCDirTheta"></div>
-							<div id="LC61">Dir &phi;</div>
-							<div id="LC62"><input type="range" min="-180" max="180" id="LCDirPhi"></div>
 						</div>
 					</div>
 				</div>
