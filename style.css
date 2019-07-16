@@ -230,10 +230,8 @@ canvas {
 }
 
 .upperLayer div.cityDescription {
-    width: auto;
-    height: auto;
-    max-width: 515px;
-    max-height: 740px;
+    width: 350px;
+    height: 400px;
     margin: 30px 0 0 30px;
     background: #DDD;
     overflow: hidden;
@@ -241,16 +239,19 @@ canvas {
     z-index: 100;
     padding: 30px;
     border-radius: 10px;
-    top: 100px;
+    bottom: 15px;
     right: 15px;
-    /* font-size: 15px; */
+    font-size: 10px;
     visibility: hidden;
+    overflow: scroll;
+    text-overflow: ellipsis;
 }
 
 
 div.cityDescription p {
     font-size: 20px;
     font-weight: 25;
+    width: 100%;
 }
 
 div.cityPopup p {
